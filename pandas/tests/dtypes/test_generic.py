@@ -7,7 +7,10 @@ from pandas.core.dtypes import generic as gt
 
 import pandas as pd
 import pandas._testing as tm
+import random
 
+seed_value = 42
+random.seed(seed_value)
 
 class TestABCClasses:
     tuples = [[1, 2, 2], ["red", "blue", "red"]]
@@ -128,3 +131,25 @@ def test_setattr_warnings():
         #  warn when setting column to nonexistent name
         df.four = df.two + 2
         assert df.four.sum() > df.two.sum()
+
+
+def test_pct_changes_helper(test_list):
+    test = pd.DataFrame()
+    test['testdata'] = test_list
+    test['pct_changes'] = test['testdata'].pct_change()
+    print (test['pct_changes'])
+    print(test['pct_changes'][1])
+    # Define the expected result based on your example
+    expected_result = pd.Series([None, (test_list[1]-test_list[0])/abs(test_list[0]), 
+            (test_list[2]-test_list[1])/abs(test_list[1])], name = 'pct_changes', dtype=float)
+
+    print(expected_result)
+
+    # Use assertion methods to check if the result matches the expected result
+    return (test['pct_changes'].equals(expected_result))
+
+def test_pct_changes():
+    num_tests = 10
+    for test in num_tests:
+        test_list = [random.random() for _ in range(3)]
+        assert test_pct_changes_helper(test_list) == True
