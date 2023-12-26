@@ -153,5 +153,3 @@ def test_pct_changes():
     for test in range(num_tests):
         test_list = [random.random() for _ in range(3)]
         assert test_pct_changes_helper(test_list) == True
-
-test_pct_changes()
