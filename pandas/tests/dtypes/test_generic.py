@@ -150,6 +150,8 @@ def test_pct_changes_helper(test_list):
 
 def test_pct_changes():
     num_tests = 10
-    for test in num_tests:
+    for test in range(num_tests):
         test_list = [random.random() for _ in range(3)]
         assert test_pct_changes_helper(test_list) == True
+
+test_pct_changes()
